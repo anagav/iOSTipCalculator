@@ -42,10 +42,16 @@ NSUserDefaults *defaults;
     
 }
 
+-(void)textFieldDidChange:(id)sender
+{
+    [self calculatePercentage:0 :0];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     _tipLabel.text = @"0";
+    _finalAmountLabel.text = @"0";
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
         self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationItem.title=@"Tip Calculator";
@@ -53,6 +59,11 @@ NSUserDefaults *defaults;
     [_tipPercentage addTarget:self
                          action:@selector(action:)
                forControlEvents:UIControlEventValueChanged];
+    
+    [_billTextField addTarget:self
+                  action:@selector(textFieldDidChange:)
+        forControlEvents:UIControlEventEditingChanged];
+    
      self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(onSettingsButton)];
     // Do any additional setup after loading the view from its nib.
 }
@@ -64,7 +75,6 @@ NSUserDefaults *defaults;
 
 
 - (void)action:(id)sender {
-
     [self calculatePercentage:0 :0];
 }
 
